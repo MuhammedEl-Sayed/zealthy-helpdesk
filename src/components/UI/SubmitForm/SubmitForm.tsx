@@ -26,7 +26,7 @@ export const SubmitForm = () => {
     },
   });
 
-  const onSubmit = async (values) => {
+  const onSubmit = async (values: Record<string, string>) => {
     try {
       await addTicket({
         id: null,

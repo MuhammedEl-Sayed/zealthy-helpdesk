@@ -1,23 +1,11 @@
-import React, { Dispatch, SetStateAction, useState } from 'react';
-import {
-  IconCheck,
-  IconClock,
-  IconClockFilled,
-  IconFileFilled,
-  IconList,
-  IconMail,
-  IconStar,
-  IconStarFilled,
-  IconThumbUpFilled,
-} from '@tabler/icons-react';
 import { Text, rem } from '@mantine/core';
+import { IconClockFilled, IconList, IconStarFilled, IconThumbUpFilled } from '@tabler/icons-react';
+import { Dispatch, SetStateAction } from 'react';
 import { IconButtonWithNumber } from '@/components/UI/IconButton/IconButtonWithNumber';
-import classes from './Navbar.module.css';
-import { theme } from '@/theme';
-import { IconType } from '@/consts/Icons';
 import { Status } from '@/consts/Status';
-import { Ticket } from '@/types/ticket';
 import { useTickets } from '@/contexts/MessagesContext';
+import { theme } from '@/theme';
+import classes from './Navbar.module.css';
 
 interface NavbarProps {
   filter: Status | null;
