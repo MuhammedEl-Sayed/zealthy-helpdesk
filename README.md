@@ -1,6 +1,14 @@
 # Zealthy Helpdesk
 
-[Zealthy Helpdesk](zealthy-helpdesk.vercel.app) is a simple ticket management system designed to streamline the process of handling support requests. It allows end users to submit support tickets and support staff to manage these tickets effectively to showcase my technical skills. Given the time limit, some corners were cut to balance out some of the depth I wanted to have. Things likes types weren't entirely fleshed out, and some components, `TicketTable` in particular, could have been further component-ized to make the codebase more readable and easier to maintain.
+[Zealthy Helpdesk](zealthy-helpdesk.vercel.app) is a simple ticket management system designed to streamline the process of handling support requests. It allows end users to submit support tickets and support staff to manage these tickets effectively to showcase my technical skills.
+
+Given the time limit, some corners were cut to balance out some of the depth I wanted to have. Things likes types weren't entirely fleshed out, and some components, `TicketTable` in particular, could have been further component-ized to make the codebase more readable and easier to maintain. Other avenues for improvement include:
+
+1. Session management.
+2. More UX-friendly error handling.
+3. Login page and protected routing.
+4. Ticket pagination.
+5. Visual UI improvements.
 
 ## Routes
 
