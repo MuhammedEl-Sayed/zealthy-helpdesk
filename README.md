@@ -1,34 +1,34 @@
-# Mantine Vite template
+# Zealthy Helpdesk
 
-## Features
+[Zealthy Helpdesk](zealthy-helpdesk.vercel.app) is a simple ticket management system designed to streamline the process of handling support requests. It allows end users to submit support tickets and support staff to manage these tickets effectively to showcase my technical skills. Given the time limit, some corners were cut to balance out some of the depth I wanted to have. Things likes types weren't entirely fleshed out, and some components, `TicketTable` in particular, could have been further component-ized to make the codebase more readable and easier to maintain.
 
-This template comes with the following features:
+## Routes
 
-- [PostCSS](https://postcss.org/) with [mantine-postcss-preset](https://mantine.dev/styles/postcss-preset)
-- [TypeScript](https://www.typescriptlang.org/)
-- [Storybook](https://storybook.js.org/)
-- [Vitest](https://vitest.dev/) setup with [React Testing Library](https://testing-library.com/docs/react-testing-library/intro)
-- ESLint setup with [eslint-config-mantine](https://github.com/mantinedev/eslint-config-mantine)
+- **/**: Ticket submission with basic error handling and comprehensive input validation.
+- **/admin**: Admin page where you can view a list of all tickets, update their status, and respond to them. Ticket statuses include "New", "In Progress", and "Resolved".
 
-## npm scripts
+## Tech Stack
 
-## Build and dev scripts
+- **Frontend**: React/Typescript with Mantine as the UI framework.
+- **Backend**: [Node.js/ExpressJS/MongoDB. Quick and simple.](https://github.com/MuhammedEl-Sayed/zealthy-helpdesk-api)
 
-- `dev` – start development server
-- `build` – build production version of the app
-- `preview` – locally preview production build
+## Getting Started
 
-### Testing scripts
+Start with creating a .env file and add a VITE_API_URL that points to your local API.
 
-- `typecheck` – checks TypeScript types
-- `lint` – runs ESLint
-- `prettier:check` – checks files with Prettier
-- `vitest` – runs vitest tests
-- `vitest:watch` – starts vitest watch
-- `test` – runs `vitest`, `prettier:check`, `lint` and `typecheck` scripts
+```bash
+git clone https://github.com/MuhammedEl-Sayed/zealthy-helpdesk.git
+cd zealthy-helpdesk
+```
 
-### Other scripts
+Then, install the dependencies:
 
-- `storybook` – starts storybook dev server
-- `storybook:build` – build production storybook bundle to `storybook-static`
-- `prettier:write` – formats all files with Prettier
+```bash
+npm install
+```
+
+To start the development server:
+
+```bash
+npm run dev
+```
