@@ -2,7 +2,7 @@ import '@mantine/core/styles.css';
 import { MantineProvider } from '@mantine/core';
 import { Router } from './Router';
 import { theme } from './theme';
-import { TicketProvider } from './contexts/MessagesContext';
+import { TicketProvider } from './contexts/TicketsContext';
 
 export default function App() {
   return (

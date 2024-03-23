@@ -11,16 +11,17 @@ import {
   MRT_RowData,
 } from 'mantine-react-table';
 import { Button, Flex, Menu, ScrollArea, Stack, Title, Modal, Textarea } from '@mantine/core';
-import { IconSend, IconExchange } from '@tabler/icons-react';
+import { IconSend, IconExchange, IconCirclePlus } from '@tabler/icons-react';
 import { debounce } from 'lodash';
+import { useNavigate } from 'react-router-dom';
 import { Status } from '@/consts/Status';
 import { convertToRgba } from '@/utils/convertToRgba';
 import { theme } from '@/theme';
-
 import { StatusBadge } from '../StatusBadge/StatusBadge';
 import { Ticket } from '@/types/ticket';
-import { useTickets } from '@/contexts/MessagesContext';
+import { useTickets } from '@/contexts/TicketsContext';
 import { convertStatusEnum } from '@/utils/convertStatusEnum';
+import { IconButton } from '../IconButton/IconButton';
 
 interface TicketTableProps {
   filter: Status | null;
@@ -30,6 +31,11 @@ const TicketTable = ({ filter }: TicketTableProps) => {
   const { tickets, updateTicket, respondToTicket, getTicketsByStatus } = useTickets();
 
   const [filteredData, setFilteredData] = useState(tickets);
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [response, setResponse] = useState('');
+  const [selectedRow, setSelectedRow] = useState<MRT_RowData>({});
+
+  const navigate = useNavigate();
   useEffect(() => {
     if (filter === null) setFilteredData(tickets);
     else setFilteredData(getTicketsByStatus(filter));
@@ -45,9 +51,6 @@ const TicketTable = ({ filter }: TicketTableProps) => {
     table.setEditingRow(null);
   };
   const debouncedChangeHandler = useMemo(() => debounce((value) => setResponse(value), 300), []);
-  const [isModalOpen, setIsModalOpen] = useState(false);
-  const [response, setResponse] = useState('');
-  const [selectedRow, setSelectedRow] = useState<MRT_RowData>({});
 
   const handleSendResponseClick = (row: MRT_RowData) => {
     setSelectedRow(row);
@@ -56,7 +59,6 @@ const TicketTable = ({ filter }: TicketTableProps) => {
   const handleSubmitResponse = () => {
     if (selectedRow) {
       respondToTicket(selectedRow.original.id ?? '', response);
-      console.log(response);
       setIsModalOpen(false);
     }
   };
@@ -80,8 +82,14 @@ const TicketTable = ({ filter }: TicketTableProps) => {
             enableEditing: false,
           },
           {
-            accessorKey: 'from',
-            header: 'From',
+            accessorKey: 'name',
+            header: 'Name',
+            size: 200,
+            enableEditing: false,
+          },
+          {
+            accessorKey: 'email',
+            header: 'Email',
             size: 200,
             enableEditing: false,
           },
@@ -182,8 +190,8 @@ const TicketTable = ({ filter }: TicketTableProps) => {
         '--mrt-row-hover-background-color': ' #fff',
         '--mrt-selected-row-background-color': '#000',
         height: '100%',
-        //get rid of border
-        border: 'none',
+        //border only top
+        border: '1px solid #e1e1e1',
       },
     },
     enablePagination: false,
@@ -199,6 +207,14 @@ const TicketTable = ({ filter }: TicketTableProps) => {
       </Stack>
     ),
     onEditingRowSave: handleSaveUser,
+    renderTopToolbar: () => (
+      <IconButton
+        leftIcon={<IconCirclePlus color={theme.colors?.green?.[8]} />}
+        text="Submit a ticket"
+        staticBackgroundColor="transparent"
+        onClick={() => navigate('/')}
+      />
+    ),
   });
 
   return (

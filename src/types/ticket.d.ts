@@ -3,7 +3,8 @@ import { Status } from '@/consts/Status';
 interface Ticket {
   id: string | null;
   title: string;
-  from: string;
+  name: string;
+  email: string;
   status: Status;
   createdAt?: number;
   updatedAt?: number;

@@ -35,13 +35,9 @@ export const TicketProvider = ({ children }: { children: React.ReactNode }) => {
     tickets.filter((ticket) => ticket.status === status);
 
   const addTicket = async (ticket: Ticket) => {
-    try {
-      console.log(ticket);
-      const response = await axios.post(`${import.meta.env.VITE_API_URL}/tickets`, ticket);
-      setTickets([...tickets, response.data]);
-    } catch (error) {
-      console.error('Failed to add ticket:', error);
-    }
+    console.log(ticket);
+    const response = await axios.post(`${import.meta.env.VITE_API_URL}/tickets`, ticket);
+    setTickets([...tickets, response.data]);
   };
 
   const deleteTicket = async (id: string) => {

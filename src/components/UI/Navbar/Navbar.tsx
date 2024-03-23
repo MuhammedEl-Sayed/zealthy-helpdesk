@@ -1,9 +1,9 @@
 import { Text, rem } from '@mantine/core';
 import { IconClockFilled, IconList, IconStarFilled, IconThumbUpFilled } from '@tabler/icons-react';
 import { Dispatch, SetStateAction } from 'react';
-import { IconButtonWithNumber } from '@/components/UI/IconButton/IconButtonWithNumber';
+import { IconButton } from '@/components/UI/IconButton/IconButton';
 import { Status } from '@/consts/Status';
-import { useTickets } from '@/contexts/MessagesContext';
+import { useTickets } from '@/contexts/TicketsContext';
 import { theme } from '@/theme';
 import classes from './Navbar.module.css';
 
@@ -31,28 +31,28 @@ export const Navbar = ({ filter, setFilter }: NavbarProps) => {
       <Text className={classes.title} fw={600} size="lg" c={theme.colors?.blue?.[8]}>
         Tickets
       </Text>
-      <IconButtonWithNumber
+      <IconButton
         number={tickets.length}
         leftIcon={<IconList style={iconStyle(null)} stroke={1.5} />}
         text="All"
         onClick={() => handleClick(null)}
         selected={isSelected(null)}
       />
-      <IconButtonWithNumber
+      <IconButton
         number={getTicketsByStatus(Status.New).length}
         leftIcon={<IconStarFilled style={iconStyle(Status.New)} stroke={1.5} />}
         text="New"
         onClick={() => handleClick(Status.New)}
         selected={isSelected(Status.New)}
       />
-      <IconButtonWithNumber
+      <IconButton
         number={getTicketsByStatus(Status.InProgress).length}
         leftIcon={<IconClockFilled style={iconStyle(Status.InProgress)} stroke={1.5} />}
         text="In Progress"
         onClick={() => handleClick(Status.InProgress)}
         selected={isSelected(Status.InProgress)}
       />
-      <IconButtonWithNumber
+      <IconButton
         number={getTicketsByStatus(Status.Resolved).length}
         leftIcon={<IconThumbUpFilled style={iconStyle(Status.Resolved)} stroke={1.5} />}
         text="Resolved"

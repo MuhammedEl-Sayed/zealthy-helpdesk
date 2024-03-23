@@ -1,6 +1,6 @@
 import { Button, Text } from '@mantine/core';
 import React from 'react';
-import classes from './IconButtonWithNumber.module.css';
+import classes from './IconButton.module.css';
 import { theme } from '@/theme';
 import { convertToRgba } from '@/utils/convertToRgba';
 
@@ -8,21 +8,26 @@ interface IconButtonProps {
   leftIcon?: React.ReactNode;
   text: string;
   onClick: () => void;
-  number: number;
+  number?: number;
   selected?: boolean;
+  staticBackgroundColor?: string;
 }
 
-export const IconButtonWithNumber = ({
+export const IconButton = ({
   leftIcon,
   text,
   onClick,
   number,
   selected = true,
+  staticBackgroundColor,
 }: IconButtonProps) => {
   const color = selected ? theme.colors?.green?.[8] : theme.colors?.blue?.[8];
-  const backgroundColor = selected
+  const dynamicBackgroundColor = selected
     ? convertToRgba(theme.colors?.green?.[3] as string, 0.3)
     : '#fff';
+
+  // Use staticBackgroundColor if provided, otherwise use dynamicBackgroundColor
+  const backgroundColor = staticBackgroundColor || dynamicBackgroundColor;
 
   return (
     <Button
@@ -36,9 +41,11 @@ export const IconButtonWithNumber = ({
         </div>
       }
       rightSection={
-        <Text className={classes.rightSection} c={color}>
-          {number}
-        </Text>
+        number && (
+          <Text className={classes.rightSection} c={color}>
+            {number}
+          </Text>
+        )
       }
       onClick={onClick}
       styles={{

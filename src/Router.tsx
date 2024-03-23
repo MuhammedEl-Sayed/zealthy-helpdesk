@@ -1,14 +1,14 @@
 import { createBrowserRouter, RouterProvider } from 'react-router-dom';
-import { HomePage } from './pages/Home/Home.page';
 import { SubmitPage } from './pages/Submit/Submit.page';
+import { AdminPanel } from './pages/Home/AdminPanel';
 
 const router = createBrowserRouter([
   {
-    path: '/',
-    element: <HomePage />,
+    path: '/admin',
+    element: <AdminPanel />,
   },
   {
-    path: '/submit',
+    path: '/',
     element: <SubmitPage />,
   },
 ]);

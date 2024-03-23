@@ -1,11 +1,11 @@
 import { useState } from 'react';
-import classes from './Welcome.module.css';
-import { Navbar } from '../UI/Navbar/Navbar';
+import classes from './AdminPanel.module.css';
+import { Navbar } from '../../components/UI/Navbar/Navbar';
 
-import TicketTable from '../UI/TicketTable/TicketTable';
+import TicketTable from '../../components/UI/TicketTable/TicketTable';
 import { Status } from '@/consts/Status';
 
-export function Welcome() {
+export function AdminPanel() {
   const [filter, setFilter] = useState<Status | null>(null);
   return (
     <div className={classes.body}>
