@@ -57,7 +57,7 @@ const TicketTable = ({ filter }: TicketTableProps) => {
     setIsModalOpen(true);
   };
   const handleSubmitResponse = async () => {
-    if (selectedRow) {
+    if (selectedRow && response.length > 0) {
       setIsLoading(true);
       try {
         await respondToTicket(selectedRow.original.id ?? '', response);
@@ -68,11 +68,9 @@ const TicketTable = ({ filter }: TicketTableProps) => {
       }
       setIsModalOpen(false);
       setIsLoading(false);
+      setResponse('');
     }
   };
-  useEffect(() => {
-    setIsLoading(false);
-  }, []);
 
   const columns = useMemo<MRT_ColumnDef<Ticket>[]>(
     () => [
