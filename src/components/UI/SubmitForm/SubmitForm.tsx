@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Container, Paper, TextInput, Textarea, Button, Text } from '@mantine/core';
+import { Container, Paper, TextInput, Textarea, Button, Text, LoadingOverlay } from '@mantine/core';
 import { useForm } from '@mantine/form';
 import { IconChecks } from '@tabler/icons-react';
 import { useNavigate } from 'react-router-dom';
@@ -12,6 +12,7 @@ import { IconButton } from '../IconButton/IconButton';
 export const SubmitForm = () => {
   const [isSubmitted, setIsSubmitted] = useState(false);
   const [error, setError] = useState<Error | null>(null);
+  const [isLoading, setIsLoading] = useState(false);
 
   const { addTicket } = useTickets();
 
@@ -36,6 +37,7 @@ export const SubmitForm = () => {
   });
 
   const onSubmit = async (values: Record<string, string>) => {
+    setIsLoading(true);
     try {
       await addTicket({
         id: null,
@@ -48,12 +50,15 @@ export const SubmitForm = () => {
       setIsSubmitted(true);
     } catch (err) {
       setError(err as Error);
+    } finally {
+      setIsLoading(false);
     }
   };
 
   return (
     <Container className={styles.container}>
       <Paper className={styles.paper}>
+        <LoadingOverlay visible={isLoading} />{' '}
         {isSubmitted ? ( // I'd prefer to use an animation here.
           <>
             <IconChecks size={48} color="green" />

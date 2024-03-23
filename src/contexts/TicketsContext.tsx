@@ -60,14 +60,10 @@ export const TicketProvider = ({ children }: { children: React.ReactNode }) => {
   };
 
   const respondToTicket = async (id: string, responseToTicket: string) => {
-    try {
-      const response = await axios.put(`${import.meta.env.VITE_API_URL}/tickets/${id}/response`, {
-        responseToTicket,
-      });
-      setTickets(tickets.map((ticket) => (ticket.id === id ? response.data : ticket)));
-    } catch (error) {
-      console.error('Failed to respond to ticket:', error);
-    }
+    const response = await axios.put(`${import.meta.env.VITE_API_URL}/tickets/${id}/response`, {
+      responseToTicket,
+    });
+    setTickets(tickets.map((ticket) => (ticket.id === id ? response.data : ticket)));
   };
 
   return (

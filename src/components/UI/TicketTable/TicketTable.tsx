@@ -1,26 +1,28 @@
+import { Flex, LoadingOverlay, Menu, ScrollArea, Stack, Title } from '@mantine/core';
+import { Status } from '@/consts/Status';
+import { useTickets } from '@/contexts/TicketsContext';
+import { theme } from '@/theme';
+import { Ticket } from '@/types/ticket';
+import { convertStatusEnum } from '@/utils/convertStatusEnum';
+import { convertToRgba } from '@/utils/convertToRgba';
 import '@mantine/core/styles.css';
 import '@mantine/dates/styles.css';
-import 'mantine-react-table/styles.css';
-import { useEffect, useMemo, useState } from 'react';
+import { IconCirclePlus, IconExchange, IconSend } from '@tabler/icons-react';
 import {
+  MRT_EditActionButtons,
+  MRT_RowData,
+  MRT_TableOptions,
   MantineReactTable,
   useMantineReactTable,
   type MRT_ColumnDef,
-  MRT_EditActionButtons,
-  MRT_TableOptions,
-  MRT_RowData,
 } from 'mantine-react-table';
-import { Button, Flex, Menu, ScrollArea, Stack, Title, Modal, Textarea } from '@mantine/core';
-import { IconSend, IconExchange, IconCirclePlus } from '@tabler/icons-react';
+import 'mantine-react-table/styles.css';
+import { useEffect, useMemo, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { Status } from '@/consts/Status';
-import { convertToRgba } from '@/utils/convertToRgba';
-import { theme } from '@/theme';
-import { StatusBadge } from '../StatusBadge/StatusBadge';
-import { Ticket } from '@/types/ticket';
-import { useTickets } from '@/contexts/TicketsContext';
-import { convertStatusEnum } from '@/utils/convertStatusEnum';
 import { IconButton } from '../IconButton/IconButton';
+import { ResponseModal } from '../ResponseModal/ResponseModal';
+import { StatusBadge } from '../StatusBadge/StatusBadge';
+import { error } from 'console';
 
 interface TicketTableProps {
   filter: Status | null;
@@ -33,7 +35,8 @@ const TicketTable = ({ filter }: TicketTableProps) => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [response, setResponse] = useState('');
   const [selectedRow, setSelectedRow] = useState<MRT_RowData>({});
-
+  const [isLoading, setIsLoading] = useState(false);
+  const [error, setError] = useState<Error | null>(null);
   const navigate = useNavigate();
   useEffect(() => {
     if (filter === null) setFilteredData(tickets);
@@ -46,7 +49,6 @@ const TicketTable = ({ filter }: TicketTableProps) => {
     table,
   }) => {
     await updateTicket(values.id, values);
-
     table.setEditingRow(null);
   };
 
@@ -54,12 +56,23 @@ const TicketTable = ({ filter }: TicketTableProps) => {
     setSelectedRow(row);
     setIsModalOpen(true);
   };
-  const handleSubmitResponse = () => {
+  const handleSubmitResponse = async () => {
     if (selectedRow) {
-      respondToTicket(selectedRow.original.id ?? '', response);
+      setIsLoading(true);
+      try {
+        await respondToTicket(selectedRow.original.id ?? '', response);
+      } catch (err) {
+        setIsLoading(false);
+        setError(err as Error);
+        return;
+      }
       setIsModalOpen(false);
+      setIsLoading(false);
     }
   };
+  useEffect(() => {
+    setIsLoading(false);
+  }, []);
 
   const columns = useMemo<MRT_ColumnDef<Ticket>[]>(
     () => [
@@ -216,37 +229,22 @@ const TicketTable = ({ filter }: TicketTableProps) => {
   });
 
   return (
-    <ScrollArea>
-      <MantineReactTable table={table} />
-      {isModalOpen && (
-        <Modal
-          opened={isModalOpen}
-          onClose={() => setIsModalOpen(false)}
-          title="Send Response"
-          size="md"
-        >
-          <div style={{ display: 'flex', flexDirection: 'column', minHeight: 250 }}>
-            <Textarea
-              placeholder="Type your response here..."
-              value={response}
-              onChange={(event) => setResponse(event.currentTarget.value)}
-              minRows={5}
-              style={{ flex: '1 0 auto' }}
-              styles={{
-                input: {
-                  minHeight: 250,
-                },
-              }}
-            />
-            <div style={{ display: 'flex', justifyContent: 'flex-end', marginTop: '1em' }}>
-              <Button color="blue" onClick={() => handleSubmitResponse()}>
-                Submit
-              </Button>
-            </div>
-          </div>
-        </Modal>
-      )}
-    </ScrollArea>
+    <>
+      <LoadingOverlay visible={isLoading} />
+      <ScrollArea>
+        <MantineReactTable table={table} />
+        {isModalOpen && (
+          <ResponseModal
+            isOpen={isModalOpen}
+            onClose={() => setIsModalOpen(false)}
+            error={error}
+            response={response}
+            setResponse={setResponse}
+            onSubmit={handleSubmitResponse}
+          />
+        )}
+      </ScrollArea>
+    </>
   );
 };
 
