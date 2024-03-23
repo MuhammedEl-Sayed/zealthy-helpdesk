@@ -190,7 +190,7 @@ const TicketTable = ({ filter }: TicketTableProps) => {
         '--mrt-row-hover-background-color': ' #fff',
         '--mrt-selected-row-background-color': '#000',
         height: '100%',
-        //border only top
+
         border: '1px solid #e1e1e1',
       },
     },

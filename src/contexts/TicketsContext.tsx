@@ -21,7 +21,6 @@ export const TicketProvider = ({ children }: { children: React.ReactNode }) => {
     const fetchTickets = async () => {
       try {
         const response = await axios.get(`${import.meta.env.VITE_API_URL}/tickets` || '');
-        console.log(response.data);
         setTickets(response.data);
       } catch (error) {
         console.error('Failed to fetch tickets:', error);
@@ -35,7 +34,6 @@ export const TicketProvider = ({ children }: { children: React.ReactNode }) => {
     tickets.filter((ticket) => ticket.status === status);
 
   const addTicket = async (ticket: Ticket) => {
-    console.log(ticket);
     const response = await axios.post(`${import.meta.env.VITE_API_URL}/tickets`, ticket);
     setTickets([...tickets, response.data]);
   };

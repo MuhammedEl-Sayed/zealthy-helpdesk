@@ -26,7 +26,6 @@ export const IconButton = ({
     ? convertToRgba(theme.colors?.green?.[3] as string, 0.3)
     : '#fff';
 
-  // Use staticBackgroundColor if provided, otherwise use dynamicBackgroundColor
   const backgroundColor = staticBackgroundColor || dynamicBackgroundColor;
 
   return (

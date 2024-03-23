@@ -11,7 +11,7 @@ import { IconButton } from '../IconButton/IconButton';
 
 export const SubmitForm = () => {
   const [isSubmitted, setIsSubmitted] = useState(false);
-  const [error, setError] = useState(null); // Add this line
+  const [error, setError] = useState<Error | null>(null);
 
   const { addTicket } = useTickets();
 
@@ -46,9 +46,8 @@ export const SubmitForm = () => {
         description: values.description,
       });
       setIsSubmitted(true);
-    } catch (error) {
-      console.error('Failed to add ticket:', error);
-      setError(error); // Update the error state
+    } catch (err) {
+      setError(err as Error);
     }
   };
 
