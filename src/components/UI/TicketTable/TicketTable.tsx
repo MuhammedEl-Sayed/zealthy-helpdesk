@@ -12,7 +12,6 @@ import {
 } from 'mantine-react-table';
 import { Button, Flex, Menu, ScrollArea, Stack, Title, Modal, Textarea } from '@mantine/core';
 import { IconSend, IconExchange, IconCirclePlus } from '@tabler/icons-react';
-import { debounce } from 'lodash';
 import { useNavigate } from 'react-router-dom';
 import { Status } from '@/consts/Status';
 import { convertToRgba } from '@/utils/convertToRgba';
@@ -50,7 +49,6 @@ const TicketTable = ({ filter }: TicketTableProps) => {
 
     table.setEditingRow(null);
   };
-  const debouncedChangeHandler = useMemo(() => debounce((value) => setResponse(value), 300), []);
 
   const handleSendResponseClick = (row: MRT_RowData) => {
     setSelectedRow(row);
@@ -231,7 +229,7 @@ const TicketTable = ({ filter }: TicketTableProps) => {
             <Textarea
               placeholder="Type your response here..."
               value={response}
-              onChange={(event) => debouncedChangeHandler(event.currentTarget.value)}
+              onChange={(event) => setResponse(event.currentTarget.value)}
               minRows={5}
               style={{ flex: '1 0 auto' }}
               styles={{
