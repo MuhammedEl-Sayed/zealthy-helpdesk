@@ -1,0 +1,21 @@
+.root {
+  border-radius: 4px;
+  margin: 10px;
+  max-height: 250px;
+}
+
+.leftSection {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+
+.text {
+  padding-left: 10px;
+  font-weight: 600;
+  white-space: nowrap; /* This will prevent the text from wrapping */
+}
+
+.rightSection {
+  color: inherit; /* This will inherit the color from the parent */
+}

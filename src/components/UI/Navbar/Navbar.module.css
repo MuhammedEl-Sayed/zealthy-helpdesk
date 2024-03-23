@@ -1,0 +1,12 @@
+.navbar {
+  background-color: white;
+  height: 100vh;
+  width: rem(300px);
+  display: flex;
+  flex-direction: column;
+}
+
+.title {
+  padding-left: 15px;
+  padding-top: 15px;
+}
