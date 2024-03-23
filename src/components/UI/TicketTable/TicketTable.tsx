@@ -67,6 +67,7 @@ const TicketTable = ({ filter }: TicketTableProps) => {
       }
       setIsModalOpen(false);
       setIsLoading(false);
+      console.log('Sending email response to user');
       setResponse('');
     }
   };
