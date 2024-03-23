@@ -22,7 +22,6 @@ import { useNavigate } from 'react-router-dom';
 import { IconButton } from '../IconButton/IconButton';
 import { ResponseModal } from '../ResponseModal/ResponseModal';
 import { StatusBadge } from '../StatusBadge/StatusBadge';
-import { error } from 'console';
 
 interface TicketTableProps {
   filter: Status | null;
