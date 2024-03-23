@@ -8,9 +8,10 @@ import {
   type MRT_ColumnDef,
   MRT_EditActionButtons,
   MRT_TableOptions,
+  MRT_RowData,
 } from 'mantine-react-table';
 import { Button, Flex, Menu, ScrollArea, Stack, Title, Modal, Textarea } from '@mantine/core';
-import { IconUserCircle, IconSend, IconExchange } from '@tabler/icons-react';
+import { IconSend, IconExchange } from '@tabler/icons-react';
 import { debounce } from 'lodash';
 import { Status } from '@/consts/Status';
 import { convertToRgba } from '@/utils/convertToRgba';
@@ -46,9 +47,9 @@ const TicketTable = ({ filter }: TicketTableProps) => {
   const debouncedChangeHandler = useMemo(() => debounce((value) => setResponse(value), 300), []);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [response, setResponse] = useState('');
-  const [selectedRow, setSelectedRow] = useState(null);
+  const [selectedRow, setSelectedRow] = useState<MRT_RowData>({});
 
-  const handleSendResponseClick = (row) => {
+  const handleSendResponseClick = (row: MRT_RowData) => {
     setSelectedRow(row);
     setIsModalOpen(true);
   };
@@ -186,14 +187,14 @@ const TicketTable = ({ filter }: TicketTableProps) => {
       },
     },
     enablePagination: false,
-    renderEditRowModalContent: ({ table, row, internalEditComponents }) => (
+    renderEditRowModalContent: ({ table: tableInstance, row, internalEditComponents }) => (
       <Stack>
         <Title order={3}>Edit User</Title>
 
         {internalEditComponents}
 
         <Flex justify="flex-end" mt="xl">
-          <MRT_EditActionButtons variant="text" table={table} row={row} />
+          <MRT_EditActionButtons variant="text" table={tableInstance} row={row} />
         </Flex>
       </Stack>
     ),
@@ -224,10 +225,7 @@ const TicketTable = ({ filter }: TicketTableProps) => {
               }}
             />
             <div style={{ display: 'flex', justifyContent: 'flex-end', marginTop: '1em' }}>
-              <Button
-                color="blue"
-                onClick={() => handleSubmitResponse(table.getState().hoveredRow)}
-              >
+              <Button color="blue" onClick={() => handleSubmitResponse()}>
                 Submit
               </Button>
             </div>
